@@ -3,13 +3,28 @@ from math import sqrt, cos, radians
 
 
 def read_restaurants():
-    '''Read restaurants from JSON file'''
-
-    with open('../restaurants.json') as file:
+    restaurants_filename = 'restaurants.json'
+    with open(f'../{restaurants_filename}') as file:
         data = file.read()
         file.close()
         restaurants = json.loads(data)
         return restaurants['restaurants']
+
+
+def validate_latitude(latitude):
+    try:
+        latitude = float(latitude)
+        return latitude <= 90 and latitude >= -90
+    except ValueError:
+        return False
+
+
+def validate_longitude(longitude):
+    try:
+        longitude = float(longitude)
+        return longitude <= 180 and longitude >= -180
+    except ValueError:
+        return False
 
 
 def match_name(query, name):
