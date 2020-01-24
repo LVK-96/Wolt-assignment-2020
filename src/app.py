@@ -37,7 +37,7 @@ def restaurants():
 
     if (not validate_latitude(latitude)):
         return bad_request(
-            'Query parameter lat should be a float in the range -180-180'
+            'Query parameter lat should be a float in the range 0-90'
         )
 
     longitude = request.args.get('lon')
@@ -46,7 +46,7 @@ def restaurants():
 
     if (not validate_longitude(longitude)):
         return bad_request(
-            'Query parameter lon should be a float in the range 0-90'
+            'Query parameter lon should be a float in the range -180-180'
         )
 
     location = [float(longitude), float(latitude)]
