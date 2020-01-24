@@ -1,5 +1,5 @@
 import json
-from math import sqrt, tan, radians
+from math import sqrt, cos, radians
 
 
 def read_restaurants():
@@ -32,37 +32,46 @@ def match(query, restaurant):
            or match_tags(query, restaurant['tags']))
 
 
-def filter_by_query(restaurants, query):
-    filtered = [restaurant for restaurant in restaurants
-                if match(query, restaurant)]
-    return filtered
-
-
-def euclidean_distance(restaurant_location, user_location):
+def euclidean_distance(user_location, restaurant_location):
     '''
-    Calculate euclidean distance between two coordinates.
-    Actually the earth is not flat, but this is accurate enough
+    Calculate euclidean distance between two coordinates
+    using the length of a degree of latitude and longitude.
+    Naturall, this is isn't the most accurate method, but it is accurate enough
     when we are calculating distances of a few kilometers.
+
+    Helpful links to understand how this works:
+    https://jonisalonen.com/2014/computing-distance-between-coordinates-can-be-simple-and-fast/
+    https://en.wikipedia.org/wiki/Meridian_arc
+    https://en.wikipedia.org/wiki/Latitude#Length_of_a_degree_of_latitude
     '''
 
-    earths_ray = 6370000  # meters
-    # Python trig functions use radians
-    angle_between_lon = radians(abs(restaurant_location[0] - user_location[0]))
-    distance_lon = earths_ray * tan(angle_between_lon)
-    angle_between_lat = radians(abs(restaurant_location[1] - user_location[1]))
-    distance_lat = earths_ray * tan(angle_between_lat)
-    return (sqrt(pow(distance_lat, 2) + pow(distance_lon, 2)))
+    length_of_a_degree = 111e3  # meters
+    distance_lon = restaurant_location[0] - user_location[0]
+    distance_lat = restaurant_location[1] - user_location[1]
+
+    # Scale angle in longitutde with the cosine of latitude.
+    # This way we account for the length of a degree of longitude
+    # variaiting between ~111km at the equator and 0km at the poles.
+    distance_lon_scaled = distance_lon * cos(radians(restaurant_location[1]))
+
+    # Calculate euclidean distance in degrees and multiply by the length of
+    # a degree to get the distance in meters
+    return length_of_a_degree * sqrt(distance_lon_scaled * distance_lon_scaled
+                                     + distance_lat * distance_lat)
 
 
-def is_within_max_distance(restaurant, user_location):
-    max_distance = 3000  # 3000 meters
+def is_within_max_distance(user_location, restaurant):
+    '''
+    Check that user location is within 3km of restaurant
+    '''
+    max_distance = 3000  # meters
     restaurant_location = [float(location) for location
                            in restaurant['location']]
-    distance = euclidean_distance(restaurant_location, user_location)
+    distance = euclidean_distance(user_location, restaurant_location)
     return distance < max_distance
 
 
-def filter_by_distance(restaurants, user_location):
-    filtered = [restaurant for restaurant in restaurants
-                if is_within_max_distance(restaurant, user_location)]
-    return filtered
+def filter_by_query_and_distance(query, location, restaurants):
+    return [restaurant for restaurant in restaurants
+            if match(query, restaurant)
+            and is_within_max_distance(location, restaurant)]

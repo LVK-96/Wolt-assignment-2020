@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from utils import read_restaurants, filter_by_query, filter_by_distance
+from utils import read_restaurants, filter_by_query_and_distance
 
 
 app = Flask(__name__)
@@ -12,7 +12,6 @@ def load_restaurants():
     Store restaurants in global variable
     so we don't need to do unnecessary disk I/O
     '''
-
     global restaurants
     restaurants = read_restaurants()
 
@@ -24,6 +23,6 @@ def restaurants():
     latitude = request.args.get('lat')
     longitude = request.args.get('lon')
     location = [float(longitude), float(latitude)]
-    filtered_restaurants = filter_by_query(restaurants, query)
-    filtered_restaurants = filter_by_distance(restaurants, location)
+    filtered_restaurants = filter_by_query_and_distance(query, location,
+                                                        restaurants)
     return jsonify(filtered_restaurants)
