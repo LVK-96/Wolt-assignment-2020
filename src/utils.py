@@ -51,8 +51,9 @@ def euclidean_distance(user_location, restaurant_location):
     '''
     Calculate euclidean distance between two coordinates
     using the length of a degree of latitude and longitude.
-    Naturall, this is isn't the most accurate method, but it is accurate enough
-    when we are calculating distances of a few kilometers.
+    Naturally, this is isn't the most accurate method,
+    but it is accurate enough when we are calculating distances
+    of a few kilometers.
 
     Helpful links to understand how this works:
     https://jonisalonen.com/2014/computing-distance-between-coordinates-can-be-simple-and-fast/
