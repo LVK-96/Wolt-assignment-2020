@@ -12,6 +12,22 @@ def read_restaurants():
         return restaurants['restaurants']
 
 
+def validate_latitude(latitude):
+    try:
+        latitude = float(latitude)
+        return latitude <= 90 and latitude >= -90
+    except ValueError:
+        return False
+
+
+def validate_longitude(longitude):
+    try:
+        longitude = float(longitude)
+        return longitude <= 180 and longitude >= -180
+    except ValueError:
+        return False
+
+
 def match_name(query, name):
     return query in name.lower()
 
