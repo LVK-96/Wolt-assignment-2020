@@ -7,7 +7,7 @@ class TestAPI(unittest.TestCase):
         self.client = app.test_client()
         self.client.testing = True
 
-    def test_404(self):
+    def test_not_found(self):
         response = self.client.get('/will_not_be_found')
         self.assertEqual(response.status_code, 404)
 

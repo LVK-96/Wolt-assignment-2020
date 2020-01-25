@@ -1,4 +1,5 @@
 import unittest
+import random
 from unittest.mock import patch
 from geopy.distance import geodesic
 from app.utils import read_restaurants
@@ -51,9 +52,21 @@ class EuclideanDistanceTestCase(unittest.TestCase):
 
     def test_error_is_less_than_1percent_for_all_in_restaurantsjson(self):
         restaurants = read_restaurants()
-        for r in restaurants:
+        locations = [restaurant['location'] for restaurant in restaurants]
+        longitudes = [float(location[0]) for location in locations]
+        latitudes = [float(location[1]) for location in locations]
+        lon_min = min(longitudes)
+        lon_max = max(longitudes)
+        lat_min = min(latitudes)
+        lat_max = max(latitudes)
+        for l in locations:
+            # Choose random lon and lat from the range of the locations
+            # in restaurants.json
+            new_lon = random.uniform(lon_min, lon_max)
+            new_lat = random.uniform(lat_min, lat_max)
+            self.user_location = (new_lon, new_lat)
             err = self.calculate_error(tuple(float(location) for
-                                             location in r['location']))
+                                             location in l))
             self.assertLess(err, self.error_threshold)
 
 
