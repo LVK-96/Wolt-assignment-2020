@@ -41,13 +41,13 @@ mock_restaurants = [
         "city": "Helsinki",
         "currency": "EUR",
         "delivery_price": 390,
-        "description": "Opiskelijaruokaa",
+        "description": "Hyvää ja ravitsevaa oujee. Sillä kyllä pärjäilee",
         "image": "https://prod-wolt-venue-images-cdn.wolt.com/589ca97e51559a1ce5a61f13/8d1518569b7ce3ba72036c24b361a2cd",
         "location": [
             24.94531810272747,
             60.16936389584304
         ],
-        "name": "Hyvää ja ravitsevaa",
+        "name": "Opiskelijaruokaa",
         "online": True,
         "tags": [
             "makarooni",
