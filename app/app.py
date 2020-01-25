@@ -1,12 +1,11 @@
 from flask import Flask, request, jsonify
-from utils import (
+from .utils import (
     read_restaurants, filter_by_query_and_distance,
     validate_latitude, validate_longitude
 )
 
 
 app = Flask(__name__)
-restaurants = []
 
 
 @app.before_first_request
@@ -49,7 +48,7 @@ def restaurants():
             'Query parameter lon should be a float in the range -180-180'
         )
 
-    location = [float(longitude), float(latitude)]
+    location = (float(longitude), float(latitude))
     filtered_restaurants = filter_by_query_and_distance(query, location,
                                                         restaurants)
     return jsonify(filtered_restaurants)
