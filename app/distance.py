@@ -4,7 +4,7 @@ from math import sqrt, cos, radians
 def euclidean_distance(user_location, restaurant_location):
     '''
     Calculate euclidean distance between two coordinates
-    using the length of a degree of latitude and longitude.
+    using the length of a degree.
     Naturally, this is isn't the most accurate method,
     but it is accurate enough when we are calculating distances
     of a few kilometers.
