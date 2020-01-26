@@ -8,7 +8,10 @@ def match_description(query, description):
 
 def match_tags(query, tags):
     tags_lower = [tag.lower() for tag in tags]
-    return query in tags_lower
+    for t in tags_lower:
+        if query in t:
+            return True
+    return False
 
 
 def match_query(query, restaurant):

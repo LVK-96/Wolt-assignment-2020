@@ -23,8 +23,8 @@ class MatchQueryTestCase(unittest.TestCase):
             self.assertTrue(match_query('o', r))
 
     def test_makaroo_should_match_third_restaurant(self):
-        self.assertFalse(
-            match_query('makaroonia', self.mock_restaurants[2])
+        self.assertTrue(
+            match_query('makaroo', self.mock_restaurants[2])
         )
 
     def test_makaroonia_should_not_match_any_restaurant(self):
@@ -34,7 +34,7 @@ class MatchQueryTestCase(unittest.TestCase):
     def test_motoko_should_match_first_restaurant(self):
         self.assertTrue(match_query('motoko', self.mock_restaurants[0]))
 
-    def test_opiskelija_should_match_third_restaurant(self):
+    def test_oujee_should_match_third_restaurant(self):
         self.assertTrue(
-            match_query('opiskelija', self.mock_restaurants[2])
+            match_query('oujee', self.mock_restaurants[2])
         )
