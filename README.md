@@ -27,6 +27,15 @@ your browser. It should return 9 restaurants as JSON.
 
 ## Running tests
 
+Run all tests and show a coverage report
+
 ```bash
 docker-compose run backend sh -c "coverage run -m unittest discover && coverage report -m"
+```
+
+To run a subset of the tests, point unittest to the test module you want to run e.g.
+
+```bash
+# Only run the api tests
+docker-compose run backend coverage run -m unittest test.test_api
 ```
